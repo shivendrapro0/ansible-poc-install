@@ -1,0 +1,14 @@
+worker.list = rl-app1, loadbalancer
+worker.rl-app1.port={{ ajp_port }}
+worker.rl-app1.host={{ http_host }}
+worker.rl-app1.type=ajp13
+worker.rl-app1.lbfactor=1
+worker.rl-app1.reply_timeout=6000000
+worker.rl-app1.connection_pool_timeout=600
+worker.rl-app1.sticky_session=True
+worker.rl-app1.route=rl-app1
+
+
+worker.loadbalancer.type=lb
+worker.loadbalancer.balanced_workers=rl-app1
+worker.jkstatus.type=status

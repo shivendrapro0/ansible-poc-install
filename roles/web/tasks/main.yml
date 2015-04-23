@@ -1,0 +1,3 @@
+---
+- include: install_httpd.yml
+- include: config_httpd.yml

@@ -1,0 +1,81 @@
+---
+
+   - name: solr | creating default user for solr
+     command: useradd -m {{ application_user }} creates=/home/{{ application_user }}
+     sudo: true
+
+   - name: solr | Create Installer Directory
+     file: path={{ installer_dir }} owner={{ application_user }}  group={{ application_user }}  mode=0777  state=directory
+
+   - name: solr | Download java
+     get_url: url={{ repo }}/Hybris/jdk-{{ java_version }}.zip dest={{ installer_dir }}  mode=0777
+     register: java_result
+
+   - name: solr | Install Java
+     command: chdir={{ installer_dir }} /usr/bin/unzip -o jdk-{{ java_version }}.zip -d {{ application_home }}
+     when: java_result.changed
+
+   - name: solr | Symlink install directory jdk
+     file: src={{ application_home }}/jdk-{{ java_version }} path={{ application_home }}/jdk state=link
+
+   - name: solr | Download Tomcat
+     get_url: url={{ repo }}/Hybris/apache-tomcat-{{ tomcat_version }}.zip dest={{ installer_dir }}  mode=0777
+     register: tomcat_result
+
+   - name: app | creating tomcat home
+     file: path={{ application_home }}/apache-tomcat-{{ tomcat_version }} owner={{ application_user }} group={{ application_user }} mode=0777 state=directory
+
+   - name: solr | Install Tomcat
+     command: chdir={{ installer_dir }} /usr/bin/unzip -o apache-tomcat-{{ tomcat_version }}.zip -d {{ application_home }}
+     when: tomcat_result.changed
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: restart solr
+
+   - name: solr | Symlink install directory tomcat
+     file: src={{ application_home }}/apache-tomcat-{{ tomcat_version }} path={{ application_home }}/tomcat state=link
+
+   - name: solr | update server.xml
+     template: src=server.xml.j2 dest={{ application_home }}/tomcat/conf/server.xml
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: restart solr
+
+   - name: solr | update init.script
+     template: src=init.script.j2 dest={{ application_home }}/tomcat/bin/init-script.sh
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: restart solr
+
+   - name: solr | Download solr
+     get_url: url={{ repo }}/Hybris/solr-{{ solr_version }}.zip dest={{ installer_dir }}  mode=0777
+     register: solr_result
+
+   - name: solr | Install solr
+     command: chdir={{ installer_dir }} /usr/bin/unzip -o solr-{{ solr_version }}.zip -d {{ application_home }}/tomcat/
+     when: solr_result.changed
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: restart solr
+
+   - name: solr | Download solr lib
+     get_url: url={{ repo }}/Hybris/solr-{{ solr_version }}-lib.zip dest={{ installer_dir }}  mode=0777
+     register: solr_lib_result
+
+   - name: solr | Install solr lib
+     command: chdir={{ installer_dir }} /usr/bin/unzip -o solr-{{ solr_version }}-lib.zip -d {{ application_home }}/tomcat/lib
+     when: solr_lib_result.changed
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: restart solr
+
+   - name: solr | Copy solr.war 
+     command: chdir={{ application_home }}/tomcat/ /usr/bin/cp -r solr/server/webapps/solr.war webapps/solr.war
+     when: solr_result.changed
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: restart solr
+
+   - name: solr | Change scripts permission
+     file: dest={{ application_home }}/tomcat/bin/ state=directory mode=0777 recurse=yes owner={{ application_user }}  group={{ application_user }}
+

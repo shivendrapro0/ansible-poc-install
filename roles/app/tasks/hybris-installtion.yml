@@ -1,0 +1,103 @@
+---
+   - name: app | creating application_user
+     command: useradd -m {{ application_user }} creates=/home/{{ application_user }}
+     sudo: true
+
+   - name: app | set password for application_user
+     shell: usermod -p $(echo '{{ application_user }}' | openssl passwd -1 -stdin) {{ application_user }}
+     sudo: true
+
+   - name: app | creating installer directory 
+     file: path={{ installer_dir }} owner={{ application_user }} group={{ application_user }} mode=0777 state=directory
+
+   - name: app | check if java installer is avaiable
+     shell: ls  jdk-{{ java_version }}.zip 2>>/dev/null chdir={{ installer_dir }}
+     ignore_errors: True
+     register: java_hybris_installer_check
+
+   - name: app | download java 
+     get_url: url={{ repo }}/Hybris/jdk-{{ java_version }}.zip dest={{ installer_dir }}  mode=0777
+     when: java_hybris_installer_check|failed
+     register: java_result
+
+   - name: app | install Java
+     command: chdir={{ installer_dir }} /usr/bin/unzip -o jdk-{{ java_version }}.zip -d {{ application_home }}
+     when: java_result.changed
+
+   - name: app | creating symlink for jdk
+     file: src={{ application_home }}/jdk-{{ java_version }} path={{ application_home }}/jdk state=link
+
+   - name: app | set JAVA_HOME environment variable
+     action: lineinfile dest=~/.bash_profile regexp='export JAVA_HOME.*' line='export JAVA_HOME={{ application_home }}/jdk'
+     sudo: true
+     sudo_user: "{{ application_user }}"
+
+   - name: app | checking if hybris installer is avaiable 
+     shell: ls  hybris-commerce-suite-{{ hybris_version }}.zip 2>>/dev/null chdir={{ installer_dir }}
+     ignore_errors: True
+     register: hybris_installer_check
+
+   - name: app | download hybris 
+     get_url: url={{ repo }}/Hybris/hybris-commerce-suite-{{ hybris_version }}.zip dest={{ installer_dir }}  mode=0777
+     when: hybris_installer_check|failed
+     register: hybris_result
+
+   - name: app | creating hybris home
+     file: path={{ application_home }}/hybris-{{ hybris_version }} owner={{ application_user }} group={{ application_user }} mode=0777 state=directory
+
+   - name: app | install hybris
+     command: chdir={{ installer_dir }} /usr/bin/unzip -o hybris-commerce-suite-{{ hybris_version }}.zip  'hybris/*' -d {{ application_home }}/hybris-{{ hybris_version }}
+     when: hybris_result.changed
+     sudo: true
+     sudo_user: "{{ application_user }}"
+
+   - name: app | Symlink link for hybris
+     file: src={{ application_home }}/hybris-{{ hybris_version }} path={{ application_home }}/hybris state=link
+
+   - name: app | creating secure folder
+     file: path={{ application_home }}/hybris/secure owner={{ application_user }} group={{ application_user }} mode=0777 state=directory
+     sudo: true
+     sudo_user: "{{ application_user }}"
+
+   - name: app | update private properties
+     template: src=private.properties.j2 dest={{ application_home }}/hybris/secure/private.properties
+     sudo: true
+     sudo_user: "{{ application_user }}"
+
+   - name: app | download oracle Jar
+     get_url: url={{ repo }}/Hybris/ojdbc7.zip dest={{ installer_dir }} mode=0777
+     register: jar_result
+
+   - name: app | install Oracle jar
+     command: chdir={{ installer_dir }} /usr/bin/unzip -o ojdbc7.zip -d {{ application_home }}/hybris/hybris/bin/platform/lib/dbdriver/
+     when: jar_result.changed
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: Restart hybris
+
+
+   - name: app  | hybris configuration | ant clean all
+     shell: . ./setantenv.sh && ant clean all -Dinput.template={{ mode }}  -DJAVAMEM=3G chdir={{ application_home }}/hybris/hybris/bin/platform
+     when: hybris_result.changed
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: Restart hybris
+
+
+   - name: app | Download hybris License 
+     get_url: url={{ repo }}/Hybris/hybrislicence.jar dest={{ installer_dir }} mode=0777
+     register: license_result
+      
+   - name: app | Install Hybris License
+     command: chdir={{ installer_dir }} /usr/bin/cp -r hybrislicence.jar  {{ application_home }}/hybris/hybris/config/licence/hybrislicence.jar
+     when: license_result.changed
+     sudo: true
+     sudo_user: "{{ application_user }}"
+     notify: Restart hybris
+
+#   - name: Change ownership of Tomcat installation
+#     file: path={{ application_home }}/hybris/hybris owner={{ application_user }}  group={{ application_user }} state=directory recurse=yes
+#     when: hybris_result.changed
+
+#   - name: wait for hybris to start
+#     wait_for: host={{inventory_hostname}} port=9001 

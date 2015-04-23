@@ -1,0 +1,29 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: all
+  user: root
+ # vars:
+ #   createuser: 'devopsadmin'
+ #   createpassword: 'devopsadmin'
+  tasks:
+  - name: Setup | creating default  user
+    command: useradd -m {{ createuser }} creates=/home/{{ createuser }}
+    sudo: true
+
+  - name: Setup | set user password
+    shell: usermod -p $(echo '{{ createpassword }}' | openssl passwd -1 -stdin) {{ createuser }}
+    sudo: true
+
+  - name: Setup | authorized host with server key
+    authorized_key: user={{ createuser }}
+      key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+      path='/home/{{ createuser }}/.ssh/authorized_keys'
+      manage_dir=no
+
+  - name: Setup | creating devops dir
+    file: path=/home/{{ createuser }}/devops state=directory owner={{ createuser }} group={{ createuser }} mode=0775
+
+  - name: Setup | creating installer dir
+    file: path=/home/{{ createuser }}/installer state=directory owner={{ createuser }} group={{ createuser }} mode=0775
+
+

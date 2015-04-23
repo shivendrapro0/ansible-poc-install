@@ -1,0 +1,8 @@
+---
+  - name: Restart hybris
+    command:  chdir={{ application_home }}/hybris/hybris/bin/platform/ ./hybrisserver.sh {{ item }}
+    with_items:
+    - stop
+    - start
+    sudo: true
+    sudo_user: hybrisadmin

@@ -1,0 +1,21 @@
+---
+# sequance of execution 
+
+- name: web server installtion n configuration
+  hosts: webservers
+  remote_user: root
+
+  roles:
+    - web
+- name: application server installtion n configuration
+  hosts: appservers
+  remote_user: root
+
+  roles:
+    - app
+- name: Solr server installtion n configuration
+  hosts: solrservers
+  remote_user: root
+
+  roles:
+    - solr

@@ -1,0 +1,27 @@
+---
+  - name: web | Create document root
+    file: path={{ doc_root }} owner=apache group=apache  state=directory
+
+  - name: web | Write Apache Configuration File
+    copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
+
+  - name: web | Write Apache Mod_Jk Module File
+    copy: src=mod_jk.so dest=/etc/httpd/modules/mod_jk.so
+
+  - name: web | Write Apache Mod_JK Configuration File
+    copy: src=httpd-jk.conf dest=/etc/httpd/conf.d/httpd-jk.conf
+
+  - name: web | Write Apache Virtula Host Configuration File
+    template: src=httpd-vhost.conf.j2 dest=/etc/httpd/conf.d/httpd-vhost.conf
+
+  - name: web | Write Apache Workers Configuration File
+    template: src=workers.properties.j2 dest=/etc/httpd/conf/workers.properties
+
+  - name: web | Copy SSL Certs
+    copy: src=certs dest=/etc/httpd/conf.d/ directory_mode=0750 mode=0775
+
+    notify:
+    - restart Apache
+
+  - name: Ensure that apache is Runing
+    service: name=httpd state=started

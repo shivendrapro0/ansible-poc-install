@@ -1,0 +1,11 @@
+# Web-Server IP
+
+http_host: delvmplrl26.sapient.com
+ajp_port: 8009
+http_url: ralphlauren-us.ci.sapient.com
+env_name: "CI"
+
+jvm_route: "rl-app1"
+oracle_password: "aqswdefr#"
+
+jvm_heap_size: 3G

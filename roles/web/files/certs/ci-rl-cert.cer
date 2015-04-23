@@ -1,0 +1,76 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 17849082611492679225 (0xf7b4ae11109f6e39)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=IN, ST=Uttar Pradesh, O=RL-Sapient-Infra, OU=Ralph Lauren - Everest Program, CN=devops-ca.rl-sapient.com
+        Validity
+            Not Before: Mar 26 08:51:18 2015 GMT
+            Not After : Mar 30 08:51:18 2018 GMT
+        Subject: C=IN, ST=Uttar Pradesh, L=Noida, O=RL-Sapient-Infra, OU=Ralph Lauren - Everest Program, CN=delvmplrl13.sapient.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:e9:59:2f:4b:3e:51:aa:6d:31:a2:bb:b5:6b:42:
+                    49:f3:95:7b:d9:96:60:2f:8e:7b:d2:9a:a9:cc:6b:
+                    4e:a4:68:77:8c:fe:34:18:84:b0:25:34:6e:3f:bb:
+                    98:7d:d9:93:04:f9:de:ee:51:33:0a:2d:63:c8:e6:
+                    e2:a3:54:5e:5a:af:67:d2:04:2a:02:76:46:46:d8:
+                    b7:fa:31:d7:f6:5d:56:9c:66:1d:47:fe:bf:8a:5e:
+                    fa:f1:d0:e3:ee:10:fd:2a:48:0e:a7:1c:51:01:97:
+                    5e:ea:ac:ab:03:a0:13:39:04:89:3f:44:4f:c7:6b:
+                    cd:2f:37:bc:70:34:97:73:db:0f:f3:39:11:46:7a:
+                    d7:3e:88:3b:83:5b:12:20:16:66:6e:05:c8:01:1c:
+                    de:58:e6:1c:c6:ff:1b:34:11:a0:8e:29:ff:4d:6b:
+                    75:1e:10:71:0b:18:b2:c2:3d:2f:97:82:42:b9:2e:
+                    10:30:5f:c0:e6:87:30:a5:1a:94:ed:d9:3c:90:9c:
+                    cd:4d:0d:29:68:27:95:b5:5e:c9:8b:5d:0e:00:53:
+                    2b:df:fa:18:5f:f8:91:28:06:5c:71:8e:ba:6d:ca:
+                    07:50:75:d8:c0:91:30:01:2a:63:45:45:18:0f:ac:
+                    56:7f:58:b2:49:54:9e:86:c1:0e:c2:eb:0b:ea:42:
+                    a5:99
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Alternative Name: 
+                DNS:ralphlauren-us.ci.sapient.com, DNS:rl-us.admin.ci.sapient.com, IP Address:10.207.86.140, DNS:delvmplrl13.sapient.com
+    Signature Algorithm: sha256WithRSAEncryption
+         14:d8:33:23:83:3a:47:3b:c1:2d:d1:57:5f:31:5e:da:51:26:
+         dc:7f:8f:54:06:f7:0c:97:2c:0a:ab:f4:3c:a4:e9:86:94:ee:
+         b8:f5:38:8d:4b:3c:82:51:2a:1a:f4:46:31:a2:1f:22:f9:f6:
+         19:d9:bf:82:c2:e4:13:95:53:6c:dd:69:7c:10:25:96:2a:66:
+         88:2e:bf:fe:f3:fe:6d:08:ef:33:fb:f6:32:f8:5f:50:01:81:
+         7e:c4:22:f2:cd:0d:a9:88:a6:83:96:cf:32:4a:36:e5:58:a4:
+         2d:d7:e7:c7:d3:80:df:07:23:b8:ed:93:73:84:ec:89:36:63:
+         ba:1e:ad:d3:dd:3c:7f:51:61:c4:d2:2a:4a:e5:86:57:39:10:
+         1c:47:2a:9e:8d:08:2e:90:81:9c:84:3e:2e:ec:10:88:43:36:
+         53:4b:60:0e:ab:f8:01:a4:c3:e3:57:74:5e:4d:93:69:eb:e4:
+         15:0f:20:b6:33:c6:c5:c3:e2:f7:6b:e8:7c:0a:3b:11:f3:50:
+         ed:c0:a9:e7:86:b9:3d:6d:44:bb:2b:9f:0f:5f:e1:20:e6:f0:
+         42:6d:e8:8e:90:0d:ce:cf:01:f5:96:83:64:29:43:cd:df:24:
+         e6:f9:a7:06:90:e6:75:26:e4:71:6e:5e:50:88:ba:2b:5a:aa:
+         61:6c:81:b9
+-----BEGIN CERTIFICATE-----
+MIIEEzCCAvugAwIBAgIJAPe0rhEQn245MA0GCSqGSIb3DQEBCwUAMIGMMQswCQYD
+VQQGEwJJTjEWMBQGA1UECAwNVXR0YXIgUHJhZGVzaDEZMBcGA1UECgwQUkwtU2Fw
+aWVudC1JbmZyYTEnMCUGA1UECwweUmFscGggTGF1cmVuIC0gRXZlcmVzdCBQcm9n
+cmFtMSEwHwYDVQQDDBhkZXZvcHMtY2Eucmwtc2FwaWVudC5jb20wHhcNMTUwMzI2
+MDg1MTE4WhcNMTgwMzMwMDg1MTE4WjCBmzELMAkGA1UEBhMCSU4xFjAUBgNVBAgM
+DVV0dGFyIFByYWRlc2gxDjAMBgNVBAcMBU5vaWRhMRkwFwYDVQQKDBBSTC1TYXBp
+ZW50LUluZnJhMScwJQYDVQQLDB5SYWxwaCBMYXVyZW4gLSBFdmVyZXN0IFByb2dy
+YW0xIDAeBgNVBAMMF2RlbHZtcGxybDEzLnNhcGllbnQuY29tMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6VkvSz5Rqm0xoru1a0JJ85V72ZZgL4570pqp
+zGtOpGh3jP40GISwJTRuP7uYfdmTBPne7lEzCi1jyObio1ReWq9n0gQqAnZGRti3
++jHX9l1WnGYdR/6/il768dDj7hD9KkgOpxxRAZde6qyrA6ATOQSJP0RPx2vNLze8
+cDSXc9sP8zkRRnrXPog7g1sSIBZmbgXIARzeWOYcxv8bNBGgjin/TWt1HhBxCxiy
+wj0vl4JCuS4QMF/A5ocwpRqU7dk8kJzNTQ0paCeVtV7Ji10OAFMr3/oYX/iRKAZc
+cY66bcoHUHXYwJEwASpjRUUYD6xWf1iySVSehsEOwusL6kKlmQIDAQABo2cwZTBj
+BgNVHREEXDBagh1yYWxwaGxhdXJlbi11cy5jaS5zYXBpZW50LmNvbYIacmwtdXMu
+YWRtaW4uY2kuc2FwaWVudC5jb22HBArPVoyCF2RlbHZtcGxybDEzLnNhcGllbnQu
+Y29tMA0GCSqGSIb3DQEBCwUAA4IBAQAU2DMjgzpHO8Et0VdfMV7aUSbcf49UBvcM
+lywKq/Q8pOmGlO649TiNSzyCUSoa9EYxoh8i+fYZ2b+CwuQTlVNs3Wl8ECWWKmaI
+Lr/+8/5tCO8z+/Yy+F9QAYF+xCLyzQ2piKaDls8ySjblWKQt1+fH04DfByO47ZNz
+hOyJNmO6Hq3T3Tx/UWHE0ipK5YZXORAcRyqejQgukIGchD4u7BCIQzZTS2AOq/gB
+pMPjV3ReTZNp6+QVDyC2M8bFw+L3a+h8CjsR81DtwKnnhrk9bUS7K58PX+Eg5vBC
+beiOkA3OzwH1loNkKUPN3yTm+acGkOZ1JuRxbl5QiLorWqphbIG5
+-----END CERTIFICATE-----

@@ -1,0 +1,7 @@
+---
+   - name: restart solr
+     command:  chdir={{ application_home }}/tomcat/bin  {{ item }}
+     with_items:
+     - ./init-script.sh stop
+     - ./init-script.sh start
+

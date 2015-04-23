@@ -1,0 +1,12 @@
+---
+    application_home: "/app"
+    installer_dir: "/app/installer"
+    repo: "http://ralphtools.sapient.com/software/"
+    tomcat_version: "7.0.55"
+    java_version: "1.7.0"
+    application_user: "solr"
+    solr_version: "4.7"
+    application_user: "solradmin"
+    solr_port_http: "7001"
+    solr_port_ajp: "7002"
+    solr_port_shutdown: "7003"

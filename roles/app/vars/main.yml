@@ -1,0 +1,10 @@
+---
+    application_user: "hybrisadmin"
+    application_password: "welcome1"
+    application_home: "/app"
+    APP_HYBRIS_HOME: "/app/hybris/hybris"
+    installer_dir: "/app/installer"
+    repo: "http://ralphtools.sapient.com/software/"
+    hybris_version: "5.4.0.0"
+    java_version: "1.7.0"
+    mode: "production"

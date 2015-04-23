@@ -1,0 +1,3 @@
+---
+    installer_dir: "/app/installer"
+    doc_root: "/var/www/html/rl"

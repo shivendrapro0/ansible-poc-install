@@ -1,0 +1,32 @@
+<VirtualHost *:80>
+    DocumentRoot {{ doc_root }}
+    ServerName {{ http_url }}
+    ErrorLog logs/{{ http_url }}-error_log
+    CustomLog logs/{{ http_url }}-access_log common
+
+
+    JkUnMount /ralphlauren/_ui/ loadbalancer
+    JkUnMount /ralphlauren/_ui/* loadbalancer
+    JkMount /* loadbalancer
+
+</VirtualHost>
+
+<VirtualHost *:443>
+    DocumentRoot {{ doc_root }}
+    ServerName {{ http_url }}
+    ErrorLog logs/{{ http_url }}-error_log
+    CustomLog logs/{{ http_url }}-access_log common
+
+
+   SSLEngine on
+   SSLProtocol all -SSLv2 -SSLv3
+   SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+   SSLCertificateFile /etc/httpd/conf.d/certs/ci-rl-cert.cer
+   SSLCertificateKeyFile /etc/httpd/conf.d/certs/ci-rl.key
+
+    JkUnMount /ralphlauren/_ui/ loadbalancer
+    JkUnMount /ralphlauren/_ui/* loadbalancer
+    JkMount /* loadbalancer
+
+</VirtualHost>
+

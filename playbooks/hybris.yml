@@ -1,0 +1,22 @@
+---
+- hosts: app
+  user: devopsadmin
+
+  vars:
+    software: '/home/devopsadmin/software'
+    basedir: '/home/devopsadmin/devops'
+    hybris.binary: 'http://ralphtools.sapient.com/software/Hybris/hybris-commerce-suite-5.4.0.0.zip'
+    javabinary: 'http://ralphtools.sapient.com/software/Hybris/jdk1.7.0.zip'
+    
+ 
+  tasks:
+
+#        - name: Download Hybris
+#          get_url: url={{ hybris.binary }} dest={{ basedir }}
+
+        - name: Download Java
+          get_url: url={{ javabinary }} dest={{ basedir }}
+
+        - name: Extract Java
+          command: chdir={{ basedir }}  /bin/unzip -o  {{ basedir }}/jdk1.7.0.zip -d {{ basedir }}/java-1.7 creates={{ basedir }}/java-1.7
+

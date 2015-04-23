@@ -1,0 +1,6 @@
+---
+    - name: web | Install http and ssl package
+      yum: name={{ item }} state=present
+      with_items:
+      - httpd
+      - mod_ssl
