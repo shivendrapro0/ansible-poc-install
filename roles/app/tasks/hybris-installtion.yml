@@ -20,8 +20,12 @@
      when: java_hybris_installer_check|failed
      register: java_result
 
+   - name: app | creating java home
+     file: path={{ application_home }}/jdk-{{ java_version }} owner={{ application_user }} group={{ application_user }} mode=0777 state=directory
+
    - name: app | install Java
-     command: chdir={{ installer_dir }} /usr/bin/unzip -o jdk-{{ java_version }}.zip -d {{ application_home }}
+     #command: chdir={{ installer_dir }} /usr/bin/unzip -o jdk-{{ java_version }}.zip -d {{ application_home }}
+     unarchive: src={{ installer_dir }}/jdk-{{ java_version }}.zip dest={{ application_home }}/ copy=no
      when: java_result.changed
 
    - name: app | creating symlink for jdk
@@ -46,7 +50,8 @@
      file: path={{ application_home }}/hybris-{{ hybris_version }} owner={{ application_user }} group={{ application_user }} mode=0777 state=directory
 
    - name: app | install hybris
-     command: chdir={{ installer_dir }} /usr/bin/unzip -o hybris-commerce-suite-{{ hybris_version }}.zip  'hybris/*' -d {{ application_home }}/hybris-{{ hybris_version }}
+     #command: chdir={{ installer_dir }} /usr/bin/unzip -o hybris-commerce-suite-{{ hybris_version }}.zip   -d {{ application_home }}/hybris-{{ hybris_version }}
+     unarchive: src={{ installer_dir }}/hybris-commerce-suite-{{ hybris_version }}.zip dest={{ application_home }}/hybris-{{ hybris_version }} copy=no
      when: hybris_result.changed
      sudo: true
      sudo_user: "{{ application_user }}"
